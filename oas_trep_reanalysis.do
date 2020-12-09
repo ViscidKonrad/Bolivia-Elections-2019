@@ -251,7 +251,6 @@ program define doDataPrep
 		gen pV = sum(Emit)
 		replace pV = 100*pV/pV[_N]
 		gen inSample = inlist(NumMesa,28177,24862,31056) | VerificadorDate<tc(20oct2019 20:03:59)
-		replace inSample = dofc(FechaReg)<td(21oct2019)
 		
 		preserve
 		lpoly CC pV if inSample, degree(`degree') bwidth(4.75) nogra gen(cx0 cs0)

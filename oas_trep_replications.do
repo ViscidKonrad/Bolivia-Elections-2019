@@ -1,8 +1,13 @@
 set more off
 clear all
 set type double
-*	Set directory as desired
+*	Set working directory, if desired
 *cd ~/OAS
+
+*
+*	This code reproduces Nooruddin's analysis for the OAS final report
+*		TREP only; it's still unclear how Nooruddin sorted the computo data
+*
 
 global INPUT ../Data/TSE
 global DATA Data
@@ -254,7 +259,7 @@ ren * trep_*
 ren *NumMesa NumMesa
 save `tf'
 
-*	Computo (may need a naive import)
+*	Computo
 getTSE, computo
 keep if regexm(Ele,"Pres")
 keep if regexm(Est,"Ver") | regexm(Est,"Computada")
@@ -304,7 +309,7 @@ foreach dep in Beni Chuqui Cocha Paz Potos Santa Tar {
 *
 lpoly mshare pV if isLate2<2, nogra degree(1) bwidth(4.75) gen(mx ms)
 lpoly cshare pV if isLate2<2, nogra degree(1) bwidth(4.75) gen(cx cs)
-twoway (line ms mx, lw(vthick)) (line cs cx, lw(vthick)), yline(50) xline(84) xline(95) name(t87)
+twoway (line ms mx, lw(vthick)) (line cs cx, lw(vthick)), yline(50) xline(84) xline(95) 
 
 *
 *	Top of p.88
@@ -312,8 +317,7 @@ twoway (line ms mx, lw(vthick)) (line cs cx, lw(vthick)), yline(50) xline(84) xl
 lpoly cshare pV if isLate2==0, degree(0) bwidth(4.75) nogra gen(cx0 cs0)
 lpoly cshare pV if isLate2==1, degree(0) bwidth(0.5) nogra gen(cx1 cs1)
 twoway (scatter cshare pV if isLate2<2, msize(vtiny)) (line cs0 cx0, lw(vthick)) (line cs1 cx1, lw(vthick)) ///
-	, yline(50) xline(95) xti(" " "Share of Emitidos Counted in TREP") yti("Mesa Share of Emitidos on Acta") ///
-	legend(off) name(t88)
+	, yline(50) xline(95)  xti(" " "Share of Emitidos Counted in TREP") yti("Mesa Share of Emitidos on Acta") legend(off)
 
 *
 *	Bottom of p.88
@@ -321,8 +325,7 @@ twoway (scatter cshare pV if isLate2<2, msize(vtiny)) (line cs0 cx0, lw(vthick))
 lpoly mshare pV if isLate2==0, degree(0) bwidth(6) nogra gen(mx0 ms0)
 lpoly mshare pV if isLate2==1, degree(0) bwidth(0.5) nogra gen(mx1 ms1)
 twoway (scatter mshare pV if isLate2<2, msize(vtiny)) (line ms0 mx0, lw(vthick)) (line ms1 mx1, lw(vthick)) ///
-	, yline(50) xline(95) xti(" " "Share of Emitidos Counted in TREP") yti("Morales Share of Emitidos On Acta") ///
-	legend(off) name(b88)
+	, yline(50) xline(95) xti(" " "Share of Emitidos Counted in TREP") yti("Morales Share of Emitidos On Acta") legend(off)
 
 *
 *	Top of p.90
